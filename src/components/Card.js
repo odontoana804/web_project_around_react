@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function Card() {
+export default function Card({onRemoveCardClick, onCardClick}) {
   return (
     <div className="elements__card">
       <div className="elements__card-photo">
-        <img src=" " alt=" " className="elements__card-photo-imagen" />
-        <button className="elements__card-btn-trash"></button>
+        <img src=" " alt=" " className="elements__card-photo-imagen" onClick={onCardClick}/>
+        <button className="elements__card-btn-trash" onClick={onRemoveCardClick}></button>
       </div>
       <div className="elements__card-info">
         <p className="elements__card-title"></p>

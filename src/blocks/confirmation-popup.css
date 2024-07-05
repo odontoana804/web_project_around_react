@@ -14,6 +14,8 @@
   top: calc((100vh - 181px) / 2);
   display: flex;
   position: fixed;
+  flex-direction: column;
+  align-items: center;
 }
 
 .confirmation-popup__container {
@@ -27,8 +29,8 @@
 }
 
 .confirmation-popup__title {
-  margin: 0;
-  margin-top: 34px;
+  margin: 4px 0;
+  width: 358px;
   margin-bottom: 38px;
   font-size: 24px;
   font-weight: 900;

@@ -1,26 +1,40 @@
 import Card from "./Card";
+import avatar from "../images/avatar.jpg"
 
 
-export default function Main({onEditProfileClick, onAddPlaceClick, onEditAvatarClick, onCardClick }) {
+export default function Main({
+        onEditProfileClick, 
+        onAddPlaceClick, 
+        onEditAvatarClick, 
+        onCardClick, 
+        onRemoveCardClick, 
+    }) {
 
+    const editAvatarHoverMouseEnter = () => {
+        document.querySelector(".profile__avatar-edit").classList.add("profile__avatar-edit_shown")
+    }
 
+    const editAvatarHoverMouseLeave = () => {
+        document.querySelector(".profile__avatar-edit").classList.remove("profile__avatar-edit_shown")
+    }
  
-
-
 
     return (
       <main className="content">
         <section className="profile">
           <div className="profile__avatar-container">
             <img
-              src="<%= require('./images/avatar.jpg')%>"
+              src={avatar}
               alt="avatar"
               className="profile__avatar-image"
+              onMouseOver={editAvatarHoverMouseEnter}
+              
             />
             <button
-              className="profile__avatar-edit profile__avatar-edit_shown"
+              className="profile__avatar-edit"
               id="avatarEditButton"
               onClick={onEditAvatarClick}
+              onMouseOut={editAvatarHoverMouseLeave}
             ></button>
           </div>
           <div className="profile__info">
@@ -33,7 +47,12 @@ export default function Main({onEditProfileClick, onAddPlaceClick, onEditAvatarC
           <button className="profile__add-button" onClick={onAddPlaceClick}></button>
         </section>
   
-        <section className="elements"><Card /></section>
+        <section className="elements">
+            <Card 
+                onRemoveCardClick={onRemoveCardClick}
+                onCardClick={onCardClick}
+            />
+        </section>
       </main>
     );
   }
