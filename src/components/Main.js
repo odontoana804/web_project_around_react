@@ -1,58 +1,88 @@
 import Card from "./Card";
-import avatar from "../images/avatar.jpg"
-
+import { useEffect, useState } from "react";
+import { apiInstance } from "../utils/api";
 
 export default function Main({
-        onEditProfileClick, 
-        onAddPlaceClick, 
-        onEditAvatarClick, 
-        onCardClick, 
-        onRemoveCardClick, 
-    }) {
+  onEditProfileClick,
+  onAddPlaceClick,
+  onEditAvatarClick,
+  onCardClick,
+  onRemoveCardClick,
+}) {
+  const [userName, setUserName] = useState();
+  const [userDescription, setUserDescription] = useState();
+  const [userAvatar, setUserAvatar] = useState();
+  const [cards, setCards] = useState([]);
 
-    const editAvatarHoverMouseEnter = () => {
-        document.querySelector(".profile__avatar-edit").classList.add("profile__avatar-edit_shown")
-    }
+  useEffect(() => {
+    apiInstance
+      .getUserInfo()
+      .then((data) => {
+        setUserName(data.name);
+        setUserDescription(data.about);
+        setUserAvatar(data.avatar);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-    const editAvatarHoverMouseLeave = () => {
-        document.querySelector(".profile__avatar-edit").classList.remove("profile__avatar-edit_shown")
-    }
- 
+    apiInstance
+      .getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-    return (
-      <main className="content">
-        <section className="profile">
-          <div className="profile__avatar-container">
-            <img
-              src={avatar}
-              alt="avatar"
-              className="profile__avatar-image"
-              onMouseOver={editAvatarHoverMouseEnter}
-              
-            />
+  const editAvatarHover = () =>
+    document
+      .querySelector(".profile__avatar-edit")
+      .classList.toggle("profile__avatar-edit_shown");
+
+  return (
+    <main className="content">
+      <section className="profile">
+        <div className="profile__avatar-container">
+          <img
+            src={userAvatar}
+            alt="avatar"
+            className="profile__avatar-image"
+            onMouseOver={editAvatarHover}
+          />
+          <button
+            className="profile__avatar-edit"
+            id="avatarEditButton"
+            onClick={onEditAvatarClick}
+            onMouseOut={editAvatarHover}
+          />
+        </div>
+        <div className="profile__info">
+          <div className="profile__info-container">
+            <h1 className="profile__name">{userName}</h1>
             <button
-              className="profile__avatar-edit"
-              id="avatarEditButton"
-              onClick={onEditAvatarClick}
-              onMouseOut={editAvatarHoverMouseLeave}
-            ></button>
-          </div>
-          <div className="profile__info">
-            <div className="profile__info-container">
-              <h1 className="profile__name">Jacques Cousteau</h1>
-              <button className="profile__edit-button" onClick={onEditProfileClick}></button>
-            </div>
-            <p className="profile__description">Explorador</p>
-          </div>
-          <button className="profile__add-button" onClick={onAddPlaceClick}></button>
-        </section>
-  
-        <section className="elements">
-            <Card 
-                onRemoveCardClick={onRemoveCardClick}
-                onCardClick={onCardClick}
+              className="profile__edit-button"
+              onClick={onEditProfileClick}
             />
-        </section>
-      </main>
-    );
-  }
+          </div>
+          <p className="profile__description">{userDescription}</p>
+        </div>
+        <button className="profile__add-button" onClick={onAddPlaceClick} />
+      </section>
+
+      <section className="elements">
+        {cards.map((card) => {
+          return (
+            <Card
+              key={card._id}
+              card={card}
+              onRemoveCardClick={onRemoveCardClick}
+              onCardClick={onCardClick}
+            />
+          );
+        })}
+      </section>
+    </main>
+  );
+}
