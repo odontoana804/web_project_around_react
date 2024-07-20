@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Tripleten web_project_around
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Nombre del proyecto: Página Web Around the US - Tripleten
 
-## Available Scripts
+### Descripción del proyecto: 
 
-In the project directory, you can run:
+Página Web interactiva la cual consta de:
 
-### `npm start`
+  * un encabezado con el logo del proyecto.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  * una sección de perfil en la cual se puede:
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+    * editar el nombre del usuario y la profesión a través de una ventana modal que se abre al dar click en el botón de editar (lápiz).
 
-### `npm test`
+    * editar la foto del perfil del usuario a través de una ventana modal que se abre al dar click sobre el icono de editar (lápiz) que se muestra cuando el puntero del mouse se pone sbore la foto del perfil 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  * una sección con tarjetas interactivas de distintos lugares de los Estados Unidos, en las cuales se puede:
 
-### `npm run build`
+    * eliminar las tarjeta al accionar el botón de eliminar (basura)
+    * dar like al accionar el botón de like (corazón)
+    * abrir una ventana modal con la visualización de la imagen al dar click sobre la imagen de la tajeta; 
+    
+  * una sección con un botón para añadir mas tarjetas (+) que despliega una ventana modal con un formulario para agregar un nombre y un link de foto.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  * el pie de página.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  Los formularios de las ventanas modales cuentan con validación en tiempo real<!-- , que muestra los mensajes de error mientras que el usuario está completando los campos -->. Si alguno de los campos no esta completado correctamente el botón de guardar permanecerá desactivado. Una vez todos los campos esten llenos de la manera correcta, el botón de guardar cambia su estado y su estilo para quedar activo.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+***
 
-### `npm run eject`
+### Tecnologías:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  La página web esta diseñada con las siguientes tecnologías:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+  * El lenguaje de programación para escribir la lógica y funcionalidad de la página es **React Js**, El Lenguaje de Marcado de Hipertexto **JSX** es el código que se utiliza para estructurar la página web y sus contenidos
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  * Las hojas de estilo para los elementos de la página web estan escritos en **CSS**
+  * El proyecto es creado con **Create React App CRA** 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  Se codifican funciones asincronas de JavaScript mediante el uso de promises, para el consumo de la información de la api **https://around.nomoreparties.co/v1/web_es_11**, de la cual se consumen datos para inicializar el renderizado de las tarjetas, la información del usuario, y también enviar datos de tarjetas creadas por el usuario, la actualización de datos personales, y la actualización de los "me gusta" o "likes" que se agregan a cada tarjeta por los distintos usuarios.
+***
 
-## Learn More
+### Organización:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  El proyecto está organizado siguiendo el principio de estructura de archivos jerárquica.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  Para la organización de los archivos CSS se utilizó la metodología BEM.
 
-### Code Splitting
+  Adicionalmente, los componentes han sido desarrollados utilizando la programación orientada a objetos (POO).
+***
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Despliegue en la web:
+  La página web esta desplegada en Github Pages y se aloja en el siguiente link: **https://odontoana804.github.io/web_project_around_react/**
+***
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Página Web diseñada por Ana María Vargas.

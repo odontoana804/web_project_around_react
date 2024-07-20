@@ -5,7 +5,9 @@ export default function ImagePopup({ isOpen, onClose, card }) {
         className={isOpen ? "overlay overlay_opened" : "overlay"}
         onClick={onClose}
       />
-      <div className="img-popup img-popup_opened">
+      <div 
+        className={isOpen ? "img-popup img-popup_opened" : "img-popup"}
+      >
         <div id="popup__image">
           <button
             className="img-popup__btn-close"
