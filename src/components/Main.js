@@ -1,6 +1,7 @@
 import Card from "./Card";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { apiInstance } from "../utils/api";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function Main({
   onEditProfileClick,
@@ -9,23 +10,8 @@ export default function Main({
   onCardClick,
   onRemoveCardClick,
 }) {
-  const [userName, setUserName] = useState();
-  const [userDescription, setUserDescription] = useState();
-  const [userAvatar, setUserAvatar] = useState();
-  const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    apiInstance
-      .getUserInfo()
-      .then((data) => {
-        setUserName(data.name);
-        setUserDescription(data.about);
-        setUserAvatar(data.avatar);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
     apiInstance
       .getInitialCards()
       .then((data) => {
@@ -35,6 +21,12 @@ export default function Main({
         console.log(err);
       });
   }, []);
+
+  const currentUser = useContext(CurrentUserContext);
+
+  const [cards, setCards] = useState([]);
+
+
 
   const editAvatarHover = () =>
     document
@@ -46,7 +38,7 @@ export default function Main({
       <section className="profile">
         <div className="profile__avatar-container">
           <img
-            src={userAvatar}
+            src={currentUser.avatar}
             alt="avatar"
             className="profile__avatar-image"
             onMouseOver={editAvatarHover}
@@ -60,13 +52,13 @@ export default function Main({
         </div>
         <div className="profile__info">
           <div className="profile__info-container">
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button
               className="profile__edit-button"
               onClick={onEditProfileClick}
             />
           </div>
-          <p className="profile__description">{userDescription}</p>
+          <p className="profile__description">{currentUser.about}</p>
         </div>
         <button className="profile__add-button" onClick={onAddPlaceClick} />
       </section>
