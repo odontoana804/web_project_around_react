@@ -86,7 +86,7 @@ export default function Main({
             <h1 className="profile__name">{currentUser.name}</h1>
             <button
               className="profile__edit-button"
-              onClick={onEditProfileClick}
+              onClick={()=>onEditProfileClick()}
             />
           </div>
           <p className="profile__description">{currentUser.about}</p>

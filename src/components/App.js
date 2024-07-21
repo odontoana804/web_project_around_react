@@ -6,6 +6,7 @@ import Main from "./Main";
 import PopupWithForm from "./PopupWithForm";
 import { apiInstance } from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import EditProfilePopup from "./EditProfilePopup";
 
 
 
@@ -24,7 +25,6 @@ function App() {
       .getUserInfo()
       .then((data) => {
         setCurrentUser(data);
-        console.log(data)
       })
       .catch((err) => {
         console.log(err);
@@ -52,6 +52,25 @@ function App() {
     setIsConfirmationPopupOpen(false);
   };
 
+  const handleUpdateUser = (userInfo) => {
+    
+    apiInstance.setUserInfo(userInfo)
+    .then(()=> {
+      setCurrentUser({
+        ...currentUser, 
+        name: userInfo.name,
+        about: userInfo.about
+      })
+    })
+    .then(()=> {
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+
   return (
 
     <CurrentUserContext.Provider value={currentUser}>
@@ -60,36 +79,11 @@ function App() {
         <Header />
 
         {isEditProfilePopupOpen && (
-          <PopupWithForm
-            title="Editar Perfil"
-            name="profile"
-            buttonText="Guardar"
-            isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopups}
-          >
-            <input
-              className="profile-popup__input"
-              placeholder="Nombre"
-              type="text"
-              id="name-profile"
-              minLength="2"
-              maxLength="40"
-              required
-              name="name"
-            />
-            <span className="profile-popup__input-error name-profile-input-error"></span>
-            <input
-              className="profile-popup__input"
-              placeholder="Acerca de mí"
-              type="text"
-              id="about-profile"
-              minLength="2"
-              maxLength="200"
-              required
-              name="about"
-            />
-            <span className="profile-popup__input-error about-profile-input-error"></span>
-          </PopupWithForm>
+          <EditProfilePopup 
+            isOpen={isEditProfilePopupOpen} 
+            onClose={closeAllPopups} 
+            onUpdateUser={handleUpdateUser}
+          />
         )}
 
         {isAddPlacePopupOpen && (
