@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export default function Card({ card, onRemoveCardClick, onCardClick }) {
+export default function Card({ card, onRemoveCardClick, onCardClick, onCardLike, onCardDelete }) {
 
   const currentUser = useContext(CurrentUserContext);
 
@@ -27,7 +27,7 @@ export default function Card({ card, onRemoveCardClick, onCardClick }) {
         {isOwn && (
           <button
             className="elements__card-btn-trash"
-            onClick={()=> onRemoveCardClick(card._id)}
+            onClick={()=> onCardDelete(card._id)}
           />
         )}
       </div>
@@ -36,6 +36,7 @@ export default function Card({ card, onRemoveCardClick, onCardClick }) {
         <div className="elements__card-like-container">
           <button 
             className={cardLikeButtonClassName} 
+            onClick={(evt)=> onCardLike(card, evt)}
           />
           <p className="elements__card-likes-counter">{card.likes.length}</p>
         </div>
