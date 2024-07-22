@@ -13,6 +13,12 @@ import AddPlacePopup from "./AddPlacePopup";
 
 
 function App() {
+
+  useEffect(()=> {
+    document.addEventListener("keydown", (e) => {
+      e.key === "Escape" && closeAllPopups()
+    })
+  })
   
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);

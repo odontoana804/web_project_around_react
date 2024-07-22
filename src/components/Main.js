@@ -1,31 +1,24 @@
 import Card from "./Card";
-import { useContext, useEffect, useState } from "react";
-import { apiInstance } from "../utils/api";
+import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function Main({
-  onEditProfileClick,
-  onAddPlaceClick,
-  onEditAvatarClick,
-  onCardClick,
-  onRemoveCardClick,
-  cards,
-  onCardLike,
-  onCardDelete
-}) {
+    onEditProfileClick,
+    onAddPlaceClick,
+    onEditAvatarClick,
+    onCardClick,
+    onRemoveCardClick,
+    cards,
+    onCardLike,
+    onCardDelete
+  }) {
   
-
   const currentUser = useContext(CurrentUserContext);
-
-  
-
 
   const editAvatarHover = () =>
     document
       .querySelector(".profile__avatar-edit")
       .classList.toggle("profile__avatar-edit_shown");
-
- 
 
   return (
     <main className="content">
