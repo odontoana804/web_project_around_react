@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
-export default function Card({ card, onRemoveCardClick, onCardClick, onCardLike, onCardDelete }) {
+export default function Card({ card, onRemoveCardClick, onCardClick, onCardLike }) {
 
   const currentUser = useContext(CurrentUserContext);
 
   
-  const isOwn = card.owner._id === currentUser._id
-  const isLiked = card.likes.some(like => like._id === currentUser._id)
-  const cardLikeButtonClassName = (isLiked ? 'elements__card-btn-hearth elements__card-btn-hearth_active' : 'elements__card-btn-hearth')
+  const isOwn = card.owner._id === currentUser._id;
+  const isLiked = card.likes.some(like => like._id === currentUser._id);
+  const cardLikeButtonClassName = (isLiked ? 'elements__card-btn-hearth elements__card-btn-hearth_active' : 'elements__card-btn-hearth');
 
 
   function handleClick() {
@@ -27,7 +27,7 @@ export default function Card({ card, onRemoveCardClick, onCardClick, onCardLike,
         {isOwn && (
           <button
             className="elements__card-btn-trash"
-            onClick={()=> onCardDelete(card._id)}
+            onClick={()=> onRemoveCardClick(card)}
           />
         )}
       </div>

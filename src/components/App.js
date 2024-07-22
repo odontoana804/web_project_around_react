@@ -3,13 +3,12 @@ import Footer from "./Footer";
 import Header from "./Header";
 import ImagePopup from "./ImagePopup";
 import Main from "./Main";
-import PopupWithForm from "./PopupWithForm";
 import { apiInstance } from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-
+import ConfirmationPopup from "./ConfirmationPopup";
 
 
 function App() {
@@ -17,7 +16,7 @@ function App() {
   useEffect(()=> {
     document.addEventListener("keydown", (e) => {
       e.key === "Escape" && closeAllPopups()
-    })
+    });
   })
   
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
@@ -62,7 +61,10 @@ function App() {
     setSelectedCard(card);
   };
 
-  const handleremoveCardClick = () => setIsConfirmationPopupOpen(true);
+  const handleremoveCardClick = (card) => {
+    setIsConfirmationPopupOpen(true);
+    setSelectedCard(card);
+  }
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
@@ -70,6 +72,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
     setIsConfirmationPopupOpen(false);
+    setSelectedCard("");
   };
 
   const handleCardLike = (card, evt) => {
@@ -98,6 +101,9 @@ function App() {
     apiInstance.deleteCard(id)
     .then(() => {
       setCards(cards.filter((card) => card._id !== id))
+    })
+    .then(()=> {
+      closeAllPopups();
     })
     .catch((err) => {
       console.log(err);
@@ -181,16 +187,14 @@ function App() {
            onClose={closeAllPopups} 
            onUpdateAvatar={handleUpdateAvatar}
          />
-          
         )}
 
         {isConfirmationPopupOpen && (
-          <PopupWithForm
-            title="¿Estás seguro?"
-            name="confirmation"
-            buttonText="Si"
+          <ConfirmationPopup 
             isOpen={isConfirmationPopupOpen}
             onClose={closeAllPopups}
+            onCardDelete={handleCardDelete}
+            card={selectedCard}
           />
         )}
 
@@ -210,7 +214,6 @@ function App() {
           onRemoveCardClick={handleremoveCardClick}
           cards={cards}
           onCardLike={handleCardLike}
-          onCardDelete={handleCardDelete}
         />
 
         <Footer />

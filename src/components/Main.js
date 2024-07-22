@@ -10,7 +10,6 @@ export default function Main({
     onRemoveCardClick,
     cards,
     onCardLike,
-    onCardDelete
   }) {
   
   const currentUser = useContext(CurrentUserContext);
@@ -59,7 +58,6 @@ export default function Main({
               onRemoveCardClick={onRemoveCardClick}
               onCardClick={onCardClick}
               onCardLike={onCardLike}
-              onCardDelete={onCardDelete}
             />
           );
         })}
