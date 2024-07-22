@@ -7,10 +7,12 @@ import PopupWithForm from "./PopupWithForm";
 import { apiInstance } from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 
 
 function App() {
+  
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -52,14 +54,14 @@ function App() {
     setIsConfirmationPopupOpen(false);
   };
 
-  const handleUpdateUser = (userInfo) => {
+  const handleUpdateUser = ({name, about}) => {
     
-    apiInstance.setUserInfo(userInfo)
+    apiInstance.setUserInfo({name, about})
     .then(()=> {
       setCurrentUser({
         ...currentUser, 
-        name: userInfo.name,
-        about: userInfo.about
+        name,
+        about
       })
     })
     .then(()=> {
@@ -68,7 +70,24 @@ function App() {
     .catch((err) => {
       console.log(err);
     });
-  }
+  };
+
+  const handleUpdateAvatar = ({avatar}) => {
+
+    apiInstance.setUserAvatar({avatar})
+    .then(() => {
+      setCurrentUser({
+        ...currentUser, 
+        avatar
+      })
+    })
+    .then(()=> {
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  } 
 
 
   return (
@@ -118,23 +137,12 @@ function App() {
         )}
 
         {isEditAvatarPopupOpen && (
-          <PopupWithForm
-            title="Cambiar foto de perfil"
-            name="avatar"
-            buttonText="Guardar"
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-          >
-            <input
-              className="avatar-popup__input"
-              placeholder="Enlace a la imagen"
-              type="url"
-              id="url-avatar"
-              required
-              name="avatar"
-            />
-            <span className="avatar-popup__input-error url-avatar-input-error"></span>
-          </PopupWithForm>
+           <EditAvatarPopup 
+           isOpen={isEditAvatarPopupOpen} 
+           onClose={closeAllPopups} 
+           onUpdateAvatar={handleUpdateAvatar}
+         />
+          
         )}
 
         {isConfirmationPopupOpen && (
