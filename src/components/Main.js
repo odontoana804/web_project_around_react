@@ -9,22 +9,15 @@ export default function Main({
   onEditAvatarClick,
   onCardClick,
   onRemoveCardClick,
+  cards,
+  onCardLike,
+  onCardDelete
 }) {
   
-  const [cards, setCards] = useState([]);
 
   const currentUser = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    apiInstance
-      .getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  
 
 
   const editAvatarHover = () =>
@@ -32,37 +25,7 @@ export default function Main({
       .querySelector(".profile__avatar-edit")
       .classList.toggle("profile__avatar-edit_shown");
 
-  const handleCardLike = (card, evt) => {
-    if (evt.target.classList.contains("elements__card-btn-hearth_active")) {
-      apiInstance.removeLike(card._id)
-      .then(() => {
-        evt.target.classList.toggle("elements__card-btn-hearth_active");
-        evt.target.nextElementSibling.textContent = Number(evt.target.nextElementSibling.textContent) - 1;
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-    } else {
-      apiInstance.addLike(card._id)
-      .then(() => {
-        evt.target.classList.toggle("elements__card-btn-hearth_active");
-        evt.target.nextElementSibling.textContent = Number(evt.target.nextElementSibling.textContent) + 1;
-      })
-      .catch((err) => {
-        console.log(err);
-      })   
-    }
-  }
-
-  const handleCardDelete = (id) => {
-    apiInstance.deleteCard(id)
-    .then(() => {
-      setCards(cards.filter((card) => card._id !== id))
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
+ 
 
   return (
     <main className="content">
@@ -102,8 +65,8 @@ export default function Main({
               card={card}
               onRemoveCardClick={onRemoveCardClick}
               onCardClick={onCardClick}
-              onCardLike={handleCardLike}
-              onCardDelete={handleCardDelete}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
             />
           );
         })}

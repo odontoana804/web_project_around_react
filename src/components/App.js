@@ -8,6 +8,7 @@ import { apiInstance } from "../utils/api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 
 
@@ -19,8 +20,19 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
-
+  const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    apiInstance
+      .getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     apiInstance
@@ -53,6 +65,38 @@ function App() {
     setIsImagePopupOpen(false);
     setIsConfirmationPopupOpen(false);
   };
+
+  const handleCardLike = (card, evt) => {
+    if (evt.target.classList.contains("elements__card-btn-hearth_active")) {
+      apiInstance.removeLike(card._id)
+      .then(() => {
+        evt.target.classList.toggle("elements__card-btn-hearth_active");
+        evt.target.nextElementSibling.textContent = Number(evt.target.nextElementSibling.textContent) - 1;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+    } else {
+      apiInstance.addLike(card._id)
+      .then(() => {
+        evt.target.classList.toggle("elements__card-btn-hearth_active");
+        evt.target.nextElementSibling.textContent = Number(evt.target.nextElementSibling.textContent) + 1;
+      })
+      .catch((err) => {
+        console.log(err);
+      })   
+    }
+  }
+
+  const handleCardDelete = (id) => {
+    apiInstance.deleteCard(id)
+    .then(() => {
+      setCards(cards.filter((card) => card._id !== id))
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
 
   const handleUpdateUser = ({name, about}) => {
     
@@ -89,6 +133,18 @@ function App() {
     });
   } 
 
+  const handleAddPlaceSubmit = ({name, link}) => {
+    apiInstance.addNewCard({name, link})
+    .then((newCard) => {
+      setCards([newCard, ...cards])
+    })
+    .then(()=> {
+      closeAllPopups();
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
 
   return (
 
@@ -106,34 +162,11 @@ function App() {
         )}
 
         {isAddPlacePopupOpen && (
-          <PopupWithForm
-            title="Nuevo lugar"
-            name="place"
-            buttonText="Crear"
-            isOpen={isAddPlacePopupOpen}
+          <AddPlacePopup
+            isOpen={isAddPlacePopupOpen} 
             onClose={closeAllPopups}
-          >
-            <input
-              className="place-popup__input"
-              placeholder="Título"
-              type="text"
-              id="name-place"
-              minLength="2"
-              maxLength="30"
-              required
-              name="name"
-            />
-            <span className="place-popup__input-error name-place-input-error"></span>
-            <input
-              className="place-popup__input"
-              placeholder="Enlace a la imagen"
-              type="url"
-              id="link-place"
-              required
-              name="link"
-            />
-            <span className="place-popup__input-error link-place-input-error"></span>
-          </PopupWithForm>
+            onAddPlaceSubmit={handleAddPlaceSubmit} 
+          />
         )}
 
         {isEditAvatarPopupOpen && (
@@ -169,6 +202,9 @@ function App() {
           onEditAvatarClick={handleEditAvatarClick}
           onCardClick={handleCardClick}
           onRemoveCardClick={handleremoveCardClick}
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
         />
 
         <Footer />
