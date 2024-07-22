@@ -36,7 +36,7 @@ export default function Card({ card, onRemoveCardClick, onCardClick, onCardLike 
         <div className="elements__card-like-container">
           <button 
             className={cardLikeButtonClassName} 
-            onClick={(evt)=> onCardLike(card, evt)}
+            onClick={()=> onCardLike(card)}
           />
           <p className="elements__card-likes-counter">{card.likes.length}</p>
         </div>

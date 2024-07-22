@@ -72,15 +72,19 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
     setIsConfirmationPopupOpen(false);
-    setSelectedCard("");
+    setSelectedCard({});
   };
 
-  const handleCardLike = (card, evt) => {
-    if (evt.target.classList.contains("elements__card-btn-hearth_active")) {
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some(like => like._id === currentUser._id);
+
+    if (isLiked) {
       apiInstance.removeLike(card._id)
       .then(() => {
-        evt.target.classList.toggle("elements__card-btn-hearth_active");
-        evt.target.nextElementSibling.textContent = Number(evt.target.nextElementSibling.textContent) - 1;
+        setCards((state) => state.map((c) => c._id === card._id 
+          ? {...c, likes: c.likes.filter((like) => like._id !== currentUser._id)} 
+          : c
+        ))
       })
       .catch((err) => {
         console.log(err);
@@ -88,8 +92,10 @@ function App() {
     } else {
       apiInstance.addLike(card._id)
       .then(() => {
-        evt.target.classList.toggle("elements__card-btn-hearth_active");
-        evt.target.nextElementSibling.textContent = Number(evt.target.nextElementSibling.textContent) + 1;
+        setCards((state) => state.map((c) => c._id === card._id 
+          ? {...c, likes: [...c.likes, currentUser]} 
+          : c
+        ))
       })
       .catch((err) => {
         console.log(err);
