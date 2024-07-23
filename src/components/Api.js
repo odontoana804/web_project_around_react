@@ -8,7 +8,7 @@ export class Api {
     const options = {
       method,
       headers: { ...this.headers },
-    }
+    };
 
     if (body) {
       options.headers["Content-Type"] = "application/json";

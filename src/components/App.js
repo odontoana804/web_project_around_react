@@ -10,14 +10,13 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmationPopup from "./ConfirmationPopup";
 
-
 function App() {
 
   useEffect(()=> {
     document.addEventListener("keydown", (e) => {
       e.key === "Escape" && closeAllPopups()
     });
-  })
+  });
   
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
@@ -64,7 +63,7 @@ function App() {
   const handleremoveCardClick = (card) => {
     setIsConfirmationPopupOpen(true);
     setSelectedCard(card);
-  }
+  };
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
@@ -101,7 +100,7 @@ function App() {
         console.log(err);
       })   
     }
-  }
+  };
 
   const handleCardDelete = (id) => {
     apiInstance.deleteCard(id)
@@ -114,7 +113,7 @@ function App() {
     .catch((err) => {
       console.log(err);
     });
-  }
+  };
 
   const handleUpdateUser = ({name, about}) => {
     
@@ -149,7 +148,7 @@ function App() {
     .catch((err) => {
       console.log(err);
     });
-  } 
+  };
 
   const handleAddPlaceSubmit = ({name, link}) => {
     apiInstance.addNewCard({name, link})
@@ -162,7 +161,7 @@ function App() {
     .catch((err) => {
       console.log(err);
     });
-  }
+  };
 
   return (
 
@@ -226,7 +225,6 @@ function App() {
       </div>
     </CurrentUserContext.Provider>
   );
-
 }
 
 export default App;

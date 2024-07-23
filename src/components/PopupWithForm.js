@@ -7,7 +7,8 @@ export default function PopupWithForm({
     buttonText, 
     isOpen, 
     onClose,
-    onSubmit
+    onSubmit,
+    isValid
   }) {
 
   return (
@@ -34,14 +35,15 @@ export default function PopupWithForm({
             onClick={onClose}
           ></button>
           <button
-            className={`${name}-popup__btn-submit`}
+            className={isValid() ? `${name}-popup__btn-submit` : `${name}-popup__btn-submit ${name}-popup__btn-submit_inactive`}
             id={`btn-submit-${name}`}
             type="submit"
+            disabled={!isValid()}
           >
             {buttonText}
           </button>
         </form>
       </div>
     </>
-  )
+  );
 }
