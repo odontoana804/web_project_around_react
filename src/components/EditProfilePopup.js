@@ -74,7 +74,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       isValid={isValidForm}
     >
       <input
-        className="profile-popup__input"
+        className={errorMessage.name ? "profile-popup__input profile-popup__input_type_error" : "profile-popup__input"}
         placeholder="Nombre"
         type="text"
         id="name-profile"
@@ -87,7 +87,7 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       />
       <span className="profile-popup__input-error_active">{errorMessage.name}</span>
       <input
-        className="profile-popup__input"
+        className={errorMessage.about ? "profile-popup__input profile-popup__input_type_error" : "profile-popup__input"}
         placeholder="Acerca de mí"
         type="text"
         id="about-profile"

@@ -40,7 +40,7 @@ export default function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
       isValid={isValidForm}
     >
       <input
-        className="avatar-popup__input"
+        className={errorMessage ? "avatar-popup__input avatar-popup__input_type_error" : "avatar-popup__input"}
         placeholder="Enlace a la imagen"
         type="url"
         id="url-avatar"

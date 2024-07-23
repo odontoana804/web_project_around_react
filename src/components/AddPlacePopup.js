@@ -65,7 +65,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
       isValid={isValidForm}
     >
       <input
-        className="place-popup__input"
+        className={errorMessage.name ? "place-popup__input place-popup__input_type_error" : "place-popup__input"}
         placeholder="Título"
         type="text"
         id="name-place"
@@ -80,7 +80,7 @@ export default function AddPlacePopup({ isOpen, onClose, onAddPlaceSubmit }) {
         {errorMessage.name}
       </span>
       <input
-        className="place-popup__input"
+        className={errorMessage.link ? "place-popup__input place-popup__input_type_error" : "place-popup__input"}
         placeholder="Enlace a la imagen"
         type="url"
         id="link-place"
